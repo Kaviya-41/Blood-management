@@ -1,0 +1,24 @@
+# render.yaml — Render deployment configuration for the Blood Bank backend
+# Docs: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: blood-bank-api
+    runtime: node
+    region: oregon          # closest free-tier region; change to "frankfurt" for EU
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000          # Render assigns this automatically; kept for reference
+      - key: MONGO_URI
+        sync: false           # ← you will paste the real value in Render dashboard
+      - key: JWT_SECRET
+        sync: false           # ← you will paste the real value in Render dashboard
+      - key: FRONTEND_URL
+        sync: false           # ← paste your Vercel URL after deploying frontend
